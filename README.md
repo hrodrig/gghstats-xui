@@ -87,7 +87,9 @@ Runtime env (never baked into the image):
 | `GGHSTATS_API_TOKEN` | Shared `x-api-token` for the BFF |
 | `HOST` / `PORT` | Defaults `0.0.0.0` / `3000` |
 
-**CI:** push/PR to `develop`/`main` builds + Grype. **Release:** push annotated tag `vX.Y.Z` (must match `VERSION`) → multi-arch GHCR + cosign + SBOM.
+**Gitflow** (same as gghstats): topic branch → PR → `develop` → (ship) PR → `main` → annotated tag `vX.Y.Z`. Never push `develop`/`main` directly. See `make gitflow` / [AGENTS.md](AGENTS.md).
+
+**CI:** PR/push to `develop`/`main` builds + Grype. **Release:** tag `v*` on `main` (must match `VERSION`) → multi-arch GHCR + cosign + SBOM.
 
 Operator stack: [gghstats-xui-selfhosted](https://github.com/hrodrig/gghstats-xui-selfhosted) (`GGHSTATS_XUI_VERSION=v0.1.0`).
 

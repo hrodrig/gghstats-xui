@@ -55,9 +55,13 @@ jobs:
             REVISION=${{ github.sha }}
             BUILDDATE=${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
 
-      - name: Grype scan (fail on critical)
+      # only-fixed: Debian marks zlib MiniZip CVE-2023-45853 Critical but won't-fix
+      # (false positive on zlib1g — MiniZip not in runtime package). Still fail on
+      # fixable criticals.
+      - name: Grype scan (fail on fixable critical)
         uses: anchore/scan-action@v6
         with:
           image: gghstats-xui:ci
           fail-build: true
           severity-cutoff: critical
+          only-fixed: true
