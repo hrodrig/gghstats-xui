@@ -16,6 +16,8 @@
 !Dockerfile
 !.dockerignore
 !VERSION
+!Makefile
+!AGENTS.md
 
 # CI / GitHub Actions
 !.github/
