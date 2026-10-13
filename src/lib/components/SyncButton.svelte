@@ -61,7 +61,7 @@
 <div class="flex flex-wrap items-center gap-3">
 	<button
 		type="button"
-		class="rounded-sm bg-ink px-3.5 py-2 font-mono text-xs font-medium tracking-wide text-mist-soft transition hover:bg-teal disabled:cursor-wait disabled:opacity-60"
+		class="atlas-btn-solid disabled:cursor-wait disabled:opacity-60"
 		disabled={busy}
 		onclick={() => void trigger()}
 	>

@@ -17,8 +17,13 @@
 	const title = $derived(typeof value === 'number' ? fmtNumber(value) : String(value));
 </script>
 
-<div class="anim-fade-up flex flex-col gap-1 border-l-2 border-line pl-4 first:border-l-0 first:pl-0 sm:first:border-l-2 sm:first:pl-4">
-	<span class="text-xs font-medium tracking-[0.14em] text-ink-faint uppercase">{label}</span>
+<div
+	class="anim-fade-up flex flex-col gap-1.5 border-l-2 pl-4 first:border-l-0 first:pl-0 sm:first:border-l-2 sm:first:pl-4"
+	class:border-line={tone === 'default'}
+	class:border-teal={tone === 'teal'}
+	class:border-coral={tone === 'coral'}
+>
+	<span class="atlas-eyebrow">{label}</span>
 	<span
 		class="kpi-value"
 		class:text-teal={tone === 'teal'}

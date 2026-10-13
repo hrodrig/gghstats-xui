@@ -40,7 +40,7 @@
 		<thead>
 			<tr class="border-b border-line-strong text-left">
 				<th class="py-3 pr-3 font-mono text-[11px] tracking-[0.14em] text-ink-faint uppercase"
-					>#</th
+					>№</th
 				>
 				{#each columns as col (col.key)}
 					<th

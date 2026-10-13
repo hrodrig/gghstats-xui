@@ -1,14 +1,18 @@
 <script lang="ts">
+	import { THEME_EVENT } from '$lib/theme';
+
 	type Builder = (width: number) => SVGSVGElement | null;
 
 	let {
 		build,
 		height = 260,
-		class: className = ''
+		class: className = '',
+		reveal = true
 	}: {
 		build: Builder;
 		height?: number;
 		class?: string;
+		reveal?: boolean;
 	} = $props();
 
 	function chart(node: HTMLDivElement, builder: Builder) {
@@ -34,8 +38,11 @@
 			}
 		});
 
+		const onTheme = () => paint();
+
 		paint();
 		ro.observe(node);
+		document.addEventListener(THEME_EVENT, onTheme);
 
 		return {
 			update(next: Builder) {
@@ -44,6 +51,7 @@
 			},
 			destroy() {
 				ro.disconnect();
+				document.removeEventListener(THEME_EVENT, onTheme);
 				node.replaceChildren();
 			}
 		};
@@ -51,7 +59,7 @@
 </script>
 
 <div
-	class="atlas-chart anim-fade-up {className}"
+	class="atlas-chart {reveal ? 'anim-chart-in' : 'anim-fade-up'} {className}"
 	style="min-height: {height}px"
 	use:chart={build}
 	role="img"

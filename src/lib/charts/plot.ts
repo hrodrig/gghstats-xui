@@ -1,6 +1,6 @@
 import * as Plot from '@observablehq/plot';
 
-export const atlas = {
+const FALLBACK = {
 	teal: '#0d7377',
 	tealSoft: '#d7ecec',
 	coral: '#e85d4c',
@@ -10,6 +10,29 @@ export const atlas = {
 	line: '#d5dee6',
 	paper: '#ffffff'
 } as const;
+
+/** Read live Atlas tokens so charts follow Day/Night. */
+export function getAtlas() {
+	if (typeof document === 'undefined') return { ...FALLBACK };
+	const s = getComputedStyle(document.documentElement);
+	const read = (name: string, fallback: string) => {
+		const v = s.getPropertyValue(name).trim();
+		return v || fallback;
+	};
+	return {
+		teal: read('--atlas-teal', FALLBACK.teal),
+		tealSoft: read('--atlas-teal-soft', FALLBACK.tealSoft),
+		coral: read('--atlas-coral', FALLBACK.coral),
+		ink: read('--atlas-ink', FALLBACK.ink),
+		inkMuted: read('--atlas-ink-muted', FALLBACK.inkMuted),
+		inkFaint: read('--atlas-ink-faint', FALLBACK.inkFaint),
+		line: read('--atlas-line', FALLBACK.line),
+		paper: read('--atlas-paper', FALLBACK.paper)
+	};
+}
+
+/** @deprecated use getAtlas() — kept for any static imports */
+export const atlas = FALLBACK;
 
 export type SeriesPoint = {
 	date: Date;
@@ -28,6 +51,7 @@ export function toDatePoints(
 }
 
 export function areaClones(data: SeriesPoint[], width: number, height = 260): SVGSVGElement {
+	const atlas = getAtlas();
 	return Plot.plot({
 		width,
 		height,
@@ -87,6 +111,7 @@ export function dualTraffic(
 	width: number,
 	height = 280
 ): SVGSVGElement {
+	const atlas = getAtlas();
 	const cloneRows = clones
 		.filter((d) => d.count != null)
 		.map((d) => ({ date: d.date, value: d.count as number, series: 'Clones' }));
@@ -140,6 +165,7 @@ export function starsLine(
 	width: number,
 	height = 220
 ): SVGSVGElement {
+	const atlas = getAtlas();
 	return Plot.plot({
 		width,
 		height,
@@ -183,6 +209,7 @@ export function h2hLines(
 	width: number,
 	height = 240
 ): SVGSVGElement {
+	const atlas = getAtlas();
 	const rows = labels.flatMap((label, i) => [
 		{ date: new Date(`${label}T00:00:00Z`), value: seriesA[i] ?? 0, series: nameA },
 		{ date: new Date(`${label}T00:00:00Z`), value: seriesB[i] ?? 0, series: nameB }
@@ -226,6 +253,7 @@ export function popularBars(
 	width: number,
 	height = 220
 ): SVGSVGElement {
+	const atlas = getAtlas();
 	const data = [...items].slice(0, 8).reverse();
 	return Plot.plot({
 		width,

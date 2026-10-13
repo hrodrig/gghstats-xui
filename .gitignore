@@ -18,6 +18,9 @@
 !.vscode/
 !.vscode/extensions.json
 !.vscode/settings.json
+!.cursor/
+!.cursor/rules/
+!.cursor/rules/**
 
 # Application source and static assets
 !src/
