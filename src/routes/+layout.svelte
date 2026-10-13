@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import HermesCloud from '$lib/components/HermesCloud.svelte';
 	import Nav from '$lib/components/Nav.svelte';
 	import favicon from '$lib/assets/favicon.svg';
+	import { HERMES_LIVE, THIS_SKIN } from '$lib/hermes-projects';
 	import { THEME_EVENT, applyTheme, getPreference, resolveTheme } from '$lib/theme';
 	import './layout.css';
 
@@ -46,24 +48,47 @@
 	<meta name="theme-color" content={themeColor} />
 </svelte:head>
 
-<div class="relative z-0 min-h-dvh pb-20">
+<div class="relative z-0 flex min-h-dvh flex-col">
 	<Nav />
-	<main class="atlas-shell relative z-10">
+	<main class="atlas-shell relative z-10 flex-1">
 		{@render children()}
 	</main>
-	<footer class="atlas-shell relative z-10 mt-20">
-		<div class="border-t border-line pt-8">
-			<p class="font-display text-lg font-semibold tracking-tight text-ink">{atlasName}</p>
-			<p class="mt-2 max-w-xl text-sm text-ink-muted" style="line-height: 1.55">
-				Mist cartography for
-				<a class="text-ink-muted no-underline hover:text-teal" href="https://github.com/hrodrig/gghstats"
-					>gghstats</a
+	<footer class="atlas-shell relative z-10 mt-auto">
+		<div class="border-t border-line py-5">
+			<div
+				class="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
+			>
+				<div class="min-w-0">
+					<p class="font-display text-base font-semibold tracking-tight text-ink">{atlasName}</p>
+					<p class="mt-1 max-w-md text-sm text-ink-muted" style="line-height: 1.55">
+						Mist cartography for gghstats api-only. Token stays on the server.
+					</p>
+				</div>
+				<p
+					class="shrink-0 font-mono text-[11px] tracking-[0.14em] text-ink-faint uppercase sm:text-right"
 				>
-				api-only. Upstream token stays on the server — protect the host if public.
-			</p>
-			<p class="mt-4 font-mono text-[11px] tracking-[0.14em] text-ink-faint uppercase">
-				gghstats-xui · composed, not cluttered
-			</p>
+					<a
+						class="text-teal no-underline hover:text-teal-deep"
+						href={THIS_SKIN.href}
+						rel="noopener noreferrer"
+						target="_blank">{THIS_SKIN.name}</a
+					>
+					<span> · this skin</span>
+				</p>
+			</div>
+
+			<div class="mt-5">
+				<p class="mb-1 font-mono text-[11px] tracking-[0.14em] text-ink-faint uppercase">
+					Hermes Projects
+					<a
+						class="ml-2 text-ink-faint no-underline hover:text-teal"
+						href={HERMES_LIVE}
+						rel="noopener noreferrer"
+						target="_blank">live traffic</a
+					>
+				</p>
+				<HermesCloud />
+			</div>
 		</div>
 	</footer>
 </div>
