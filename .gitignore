@@ -13,6 +13,14 @@
 !README.md
 !tsconfig.json
 !vite.config.ts
+!Dockerfile
+!.dockerignore
+!VERSION
+
+# CI / GitHub Actions
+!.github/
+!.github/workflows/
+!.github/workflows/**
 
 # Editor
 !.vscode/
@@ -32,6 +40,8 @@
 .env
 .env.*
 !.env.example
+.atl/
+.atl/**
 node_modules/
 build/
 .svelte-kit/

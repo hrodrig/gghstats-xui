@@ -32,9 +32,9 @@
 		zIndex: number;
 	};
 
-	const n = CLOUD.length;
+	const n: number = CLOUD.length;
 	const basePoints: BasePoint[] = CLOUD.map((project, i) => {
-		const y = n === 1 ? 0 : 1 - (i / (n - 1)) * 2;
+		const y = n <= 1 ? 0 : 1 - (i / (n - 1)) * 2;
 		const r = Math.sqrt(Math.max(0, 1 - y * y));
 		const theta = GOLDEN * i;
 		return {

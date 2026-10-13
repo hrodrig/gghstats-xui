@@ -1,0 +1,63 @@
+# PR / develop / main: quality + docker build (no push) + Grype.
+name: CI
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Check
+        run: npm run check
+
+      - name: Build
+        run: npm run build
+
+  image:
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read VERSION
+        id: ver
+        run: echo "version=$(tr -d '[:space:]' < VERSION)" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: gghstats-xui:ci
+          build-args: |
+            VERSION=${{ steps.ver.outputs.version }}
+            REVISION=${{ github.sha }}
+            BUILDDATE=${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
+
+      - name: Grype scan (fail on critical)
+        uses: anchore/scan-action@v6
+        with:
+          image: gghstats-xui:ci
+          fail-build: true
+          severity-cutoff: critical

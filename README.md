@@ -63,6 +63,34 @@ npm run preview
 npm run check
 ```
 
+## Docker / GHCR
+
+Image: **`ghcr.io/hrodrig/gghstats-xui`** (Node BFF, port **3000**). Pin with `VERSION` / tag `v*` (default selfhosted: `v0.1.0`).
+
+```bash
+# Local image (amd64)
+docker buildx build --platform linux/amd64 \
+  --build-arg VERSION="$(tr -d '[:space:]' < VERSION)" \
+  -t gghstats-xui:local .
+
+docker run --rm -p 3000:3000 \
+  -e GGHSTATS_API_BASE=http://host.docker.internal:8080 \
+  -e GGHSTATS_API_TOKEN=dev-token \
+  gghstats-xui:local
+```
+
+Runtime env (never baked into the image):
+
+| Var | Purpose |
+|-----|---------|
+| `GGHSTATS_API_BASE` | Upstream gghstats origin (Compose: `http://gghstats:8080`) |
+| `GGHSTATS_API_TOKEN` | Shared `x-api-token` for the BFF |
+| `HOST` / `PORT` | Defaults `0.0.0.0` / `3000` |
+
+**CI:** push/PR to `develop`/`main` builds + Grype. **Release:** push annotated tag `vX.Y.Z` (must match `VERSION`) → multi-arch GHCR + cosign + SBOM.
+
+Operator stack: [gghstats-xui-selfhosted](https://github.com/hrodrig/gghstats-xui-selfhosted) (`GGHSTATS_XUI_VERSION=v0.1.0`).
+
 ## Design
 
 **Atlas Day** — mist daylight atmosphere, Fraunces + DM Sans + IBM Plex Mono, teal/coral accents. Built to feel clearer and more editorial than typical dark SaaS traffic dashboards.
