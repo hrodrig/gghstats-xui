@@ -1,0 +1,44 @@
+# Whitelist mode: ignore everything, then allow only tracked source.
+*
+
+# Allow directories so git can recurse into allowlisted trees
+!*/
+
+# Root project files
+!.gitignore
+!.npmrc
+!.env.example
+!package.json
+!package-lock.json
+!README.md
+!tsconfig.json
+!vite.config.ts
+
+# Editor
+!.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Application source and static assets
+!src/
+!src/**
+!static/
+!static/**
+
+# Hard denylist (never commit even if a parent is allowlisted)
+.env
+.env.*
+!.env.example
+node_modules/
+build/
+.svelte-kit/
+.output/
+.vercel/
+.netlify/
+.wrangler/
+.DS_Store
+Thumbs.db
+*.pem
+*.key
+credentials.json
+secrets.*
