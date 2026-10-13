@@ -37,6 +37,11 @@ LABEL org.opencontainers.image.title="gghstats-xui" \
 
 WORKDIR /app
 
+# Pull Debian security updates into slim runtime (fixable CVEs).
+RUN apt-get update \
+	&& apt-get upgrade -y --no-install-recommends \
+	&& rm -rf /var/lib/apt/lists/*
+
 COPY --from=build --chown=node:node /app/build ./build
 COPY --from=build --chown=node:node /app/package.json ./
 
