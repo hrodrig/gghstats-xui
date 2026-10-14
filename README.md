@@ -1,6 +1,6 @@
 # gghstats-xui
 
-[![Version](https://img.shields.io/badge/version-0.1.2-blue)](https://github.com/hrodrig/gghstats-xui/releases)
+[![Version](https://img.shields.io/badge/version-0.1.3-blue)](https://github.com/hrodrig/gghstats-xui/releases)
 [![Release](https://img.shields.io/github/v/release/hrodrig/gghstats-xui)](https://github.com/hrodrig/gghstats-xui/releases)
 [![CI](https://github.com/hrodrig/gghstats-xui/actions/workflows/ci.yml/badge.svg)](https://github.com/hrodrig/gghstats-xui/actions)
 [![Live demo](https://img.shields.io/badge/demo-xui.hermesrodriguez.com-0d7377)](https://xui.hermesrodriguez.com/)
