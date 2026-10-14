@@ -6,7 +6,9 @@
 		totalCount,
 		sort,
 		dir,
-		q = ''
+		q = '',
+		/** Path for folio links (e.g. `/` or `/featured`). */
+		basePath = '/'
 	}: {
 		page?: number;
 		perPage?: number;
@@ -15,6 +17,7 @@
 		sort: string;
 		dir: string;
 		q?: string;
+		basePath?: string;
 	} = $props();
 
 	const safePage = $derived(Math.max(1, page ?? 1));
@@ -36,7 +39,9 @@
 		if (q) params.set('q', q);
 		if (targetPage > 1) params.set('page', String(targetPage));
 		const qs = params.toString();
-		return qs ? `/?${qs}` : '/';
+		const path = !basePath || basePath === '/' ? '/' : basePath.replace(/\/$/, '');
+		if (!qs) return path;
+		return path === '/' ? `/?${qs}` : `${path}?${qs}`;
 	}
 
 	type Mark = number | 'gap-start' | 'gap-end';
