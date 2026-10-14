@@ -7,14 +7,20 @@
 		totalClones,
 		sort,
 		dir,
-		q
+		q,
+		page = 1,
+		perPage = 25
 	}: {
 		items: RepoListItem[];
 		totalClones: number;
 		sort: string;
 		dir: string;
 		q: string;
+		page?: number;
+		perPage?: number;
 	} = $props();
+
+	const rowOffset = $derived(Math.max(0, (Math.max(1, page) - 1) * Math.max(1, perPage)));
 
 	const columns: { key: SortKey; label: string; align?: 'right' }[] = [
 		{ key: 'name', label: 'Repository' },
@@ -57,7 +63,7 @@
 				{@const { owner, repo } = splitRepo(item.name)}
 				{@const share = shareOf(item.total_clones, totalClones)}
 				<tr class="group border-b border-line/80 transition hover:bg-white/50">
-					<td class="py-3.5 pr-3 font-mono text-xs text-ink-faint">{i + 1}</td>
+					<td class="py-3.5 pr-3 font-mono text-xs text-ink-faint">{rowOffset + i + 1}</td>
 					<td class="relative py-3.5 pr-3">
 						<div
 							class="pointer-events-none absolute inset-y-2 left-0 w-full max-w-[220px] rounded-sm bg-teal/10"

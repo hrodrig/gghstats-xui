@@ -1,8 +1,12 @@
 # gghstats-xui
 
-Professional **Atlas Day** dashboard for [gghstats](https://github.com/hrodrig/gghstats) in **API-only** mode.
+**[Live demo → xui.hermesrodriguez.com](https://xui.hermesrodriguez.com/)**
+
+Reference **Atlas Day** frontend for [gghstats](https://github.com/hrodrig/gghstats) in **API-only** mode — not the only UI you should build.
 
 SvelteKit SPA → same-origin BFF → `gghstats serve` with `GGHSTATS_API_ONLY=true`. The API token never ships to the browser.
+
+**Why it exists:** prove that **anyone can ship a custom interface** against gghstats JSON. Fork this skin, or write your own (any stack) and point it at an api-only instance. The product goal is **many frontends**, one durable API.
 
 ## Quick start
 
@@ -65,7 +69,7 @@ npm run check
 
 ## Docker / GHCR
 
-Image: **`ghcr.io/hrodrig/gghstats-xui`** (Node BFF, port **3000**). Pin with `VERSION` / tag `v*` (default selfhosted: `v0.1.1`).
+Image: **`ghcr.io/hrodrig/gghstats-xui`** (Node BFF, port **3000**). Pin with `VERSION` / tag `v*` (default selfhosted: `v0.1.2`).
 
 ```bash
 # Local image (amd64)
@@ -91,7 +95,7 @@ Runtime env (never baked into the image):
 
 **CI:** PR/push to `develop`/`main` builds + Grype. **Release:** tag `v*` on `main` (must match `VERSION`) → multi-arch GHCR + cosign + SBOM.
 
-Operator stack: [gghstats-xui-selfhosted](https://github.com/hrodrig/gghstats-xui-selfhosted) (`GGHSTATS_XUI_VERSION=v0.1.1`).
+Operator stack: [gghstats-xui-selfhosted](https://github.com/hrodrig/gghstats-xui-selfhosted) (`GGHSTATS_XUI_VERSION=v0.1.2`).
 
 ## Design
 
