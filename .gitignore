@@ -18,6 +18,7 @@
 !VERSION
 !Makefile
 !AGENTS.md
+!LICENSE
 
 # CI / GitHub Actions
 !.github/
@@ -37,6 +38,10 @@
 !src/**
 !static/
 !static/**
+
+# README screenshots (hero / demo)
+!assets/
+!assets/**
 
 # Hard denylist (never commit even if a parent is allowlisted)
 .env
