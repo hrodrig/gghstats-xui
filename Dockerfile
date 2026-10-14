@@ -18,8 +18,10 @@ RUN npm ci
 
 COPY . .
 RUN npm run build
+# adapter-node externalizes runtime deps (e.g. @observablehq/plot); keep them for the slim image.
+RUN npm prune --omit=dev
 
-# Production — adapter-node output is self-contained (node builtins only).
+# Production — build/ + production node_modules (not fully self-contained).
 FROM node:${NODE_VERSION}-bookworm-slim
 
 ARG VERSION
@@ -44,6 +46,8 @@ RUN apt-get update \
 
 COPY --from=build --chown=node:node /app/build ./build
 COPY --from=build --chown=node:node /app/package.json ./
+COPY --from=build --chown=node:node /app/package-lock.json ./
+COPY --from=build --chown=node:node /app/node_modules ./node_modules
 
 ENV NODE_ENV=production \
 	HOST=0.0.0.0 \
