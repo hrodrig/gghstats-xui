@@ -20,7 +20,7 @@ Reference **Atlas Day / Atlas Night** UI for [gghstats](https://github.com/hrodr
 
 **Why it exists:** prove that **anyone can ship a custom interface** against gghstats JSON. Fork this skin, or write your own (any stack) and point it at an api-only instance. The product goal is **many frontends**, one durable API.
 
-Deploy Compose / Helm: **[gghstats-xui-selfhosted](https://github.com/hrodrig/gghstats-xui-selfhosted)** (`GGHSTATS_XUI_VERSION=v0.1.2`).
+Deploy Compose / Helm: **[gghstats-xui-selfhosted](https://github.com/hrodrig/gghstats-xui-selfhosted)** (`GGHSTATS_XUI_VERSION=v0.1.3`).
 
 **Related tools (same maintainer):**
 - **[gghstats](https://github.com/hrodrig/gghstats)** — GitHub repo traffic beyond 14 days ([live demo](https://gghstats.hermesrodriguez.com); deploy: [gghstats-selfhosted](https://github.com/hrodrig/gghstats-selfhosted))
@@ -122,7 +122,7 @@ Local gate: `make check` / `make build` (see [AGENTS.md](AGENTS.md)).
 
 ## Docker / GHCR
 
-Image: **`ghcr.io/hrodrig/gghstats-xui`** (Node BFF, port **3000**). Pin with `VERSION` / tag `v*` (default selfhosted pin: `v0.1.2`).
+Image: **`ghcr.io/hrodrig/gghstats-xui`** (Node BFF, port **3000**). Pin with `VERSION` / tag `v*` (default selfhosted pin: `v0.1.3`).
 
 ```bash
 # Local image (amd64)
