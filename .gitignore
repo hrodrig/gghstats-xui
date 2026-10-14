@@ -38,6 +38,10 @@
 !static/
 !static/**
 
+# README screenshots (hero / demo)
+!assets/
+!assets/**
+
 # Hard denylist (never commit even if a parent is allowlisted)
 .env
 .env.*

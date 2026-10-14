@@ -2,7 +2,13 @@
 
 **[Live demo → xui.hermesrodriguez.com](https://xui.hermesrodriguez.com/)**
 
-Reference **Atlas Day** frontend for [gghstats](https://github.com/hrodrig/gghstats) in **API-only** mode — not the only UI you should build.
+Reference **Atlas Day / Atlas Night** frontend for [gghstats](https://github.com/hrodrig/gghstats) in **API-only** mode — not the only UI you should build.
+
+![Atlas Day — repositories + clones over time](assets/atlas-day-repos.jpg)
+
+![Atlas Night — H2H weighted share](assets/atlas-night-h2h.jpg)
+
+![Atlas Night — Hermes cartography](assets/atlas-night-cartography.jpg)
 
 SvelteKit SPA → same-origin BFF → `gghstats serve` with `GGHSTATS_API_ONLY=true`. The API token never ships to the browser.
 
@@ -99,4 +105,8 @@ Operator stack: [gghstats-xui-selfhosted](https://github.com/hrodrig/gghstats-xu
 
 ## Design
 
-**Atlas Day** — mist daylight atmosphere, Fraunces + DM Sans + IBM Plex Mono, teal/coral accents. Built to feel clearer and more editorial than typical dark SaaS traffic dashboards.
+**Atlas Day** — mist daylight atmosphere, Fraunces + DM Sans + IBM Plex Mono, teal/coral accents.
+
+**Atlas Night** — deep slate twin of the same cartography skin (not purple SaaS dark mode). Toggle: System → Day → Night.
+
+Editorial weather-map feel over typical traffic dashboards. Live: [xui.hermesrodriguez.com](https://xui.hermesrodriguez.com/).
