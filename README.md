@@ -69,7 +69,7 @@ npm run check
 
 ## Docker / GHCR
 
-Image: **`ghcr.io/hrodrig/gghstats-xui`** (Node BFF, port **3000**). Pin with `VERSION` / tag `v*` (default selfhosted: `v0.1.1`).
+Image: **`ghcr.io/hrodrig/gghstats-xui`** (Node BFF, port **3000**). Pin with `VERSION` / tag `v*` (default selfhosted: `v0.1.2`).
 
 ```bash
 # Local image (amd64)
@@ -95,7 +95,7 @@ Runtime env (never baked into the image):
 
 **CI:** PR/push to `develop`/`main` builds + Grype. **Release:** tag `v*` on `main` (must match `VERSION`) → multi-arch GHCR + cosign + SBOM.
 
-Operator stack: [gghstats-xui-selfhosted](https://github.com/hrodrig/gghstats-xui-selfhosted) (`GGHSTATS_XUI_VERSION=v0.1.1`).
+Operator stack: [gghstats-xui-selfhosted](https://github.com/hrodrig/gghstats-xui-selfhosted) (`GGHSTATS_XUI_VERSION=v0.1.2`).
 
 ## Design
 
