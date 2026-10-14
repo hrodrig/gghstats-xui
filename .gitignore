@@ -18,6 +18,7 @@
 !VERSION
 !Makefile
 !AGENTS.md
+!LICENSE
 
 # CI / GitHub Actions
 !.github/
