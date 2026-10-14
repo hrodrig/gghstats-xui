@@ -11,7 +11,8 @@
 	/** Golden-angle fibonacci sphere (unit). */
 	const GOLDEN = Math.PI * (3 - Math.sqrt(5));
 	const PERSPECTIVE = 2.8;
-	const RADIUS = 118;
+	/** Fraction of min(cloud w/h) used as projection radius (~2.5× old 118px on a ~640px stage). */
+	const RADIUS_FRAC = 0.46;
 	const IDLE_SPEED = 0.12;
 
 	type BasePoint = {
@@ -49,12 +50,14 @@
 	let rotX = $state(0.22);
 	let rotY = $state(0.35);
 	let dragging = $state(false);
+	let radius = $state(295);
+	let cloudEl: HTMLDivElement | undefined = $state();
 
 	let lastPtrX = 0;
 	let lastPtrY = 0;
 	let dragMoved = false;
 
-	function project(rx: number, ry: number): Projected[] {
+	function project(rx: number, ry: number, r: number): Projected[] {
 		const cosY = Math.cos(ry);
 		const sinY = Math.sin(ry);
 		const cosX = Math.cos(rx);
@@ -72,8 +75,8 @@
 			return {
 				name: p.name,
 				href: p.href,
-				x: x1 * RADIUS * persp,
-				y: y1 * RADIUS * persp,
+				x: x1 * r * persp,
+				y: y1 * r * persp,
 				scale: 0.7 + depth * 0.4,
 				opacity: 0.32 + depth * 0.58,
 				zIndex: Math.round(10 + depth * 90)
@@ -81,10 +84,24 @@
 		});
 	}
 
-	let projected = $derived(project(rotX, rotY));
+	let projected = $derived(project(rotX, rotY, radius));
 
 	onMount(() => {
-		if (reducedMotion.current) return;
+		const el = cloudEl;
+		let ro: ResizeObserver | undefined;
+		if (el) {
+			const syncRadius = () => {
+				const side = Math.min(el.clientWidth, el.clientHeight);
+				radius = Math.max(96, side * RADIUS_FRAC);
+			};
+			syncRadius();
+			ro = new ResizeObserver(syncRadius);
+			ro.observe(el);
+		}
+
+		if (reducedMotion.current) {
+			return () => ro?.disconnect();
+		}
 
 		let raf = 0;
 		let last = performance.now();
@@ -99,7 +116,10 @@
 		};
 
 		raf = requestAnimationFrame(tick);
-		return () => cancelAnimationFrame(raf);
+		return () => {
+			cancelAnimationFrame(raf);
+			ro?.disconnect();
+		};
 	});
 
 	function onPointerDown(e: PointerEvent) {
@@ -148,6 +168,7 @@
 {:else}
 	<div
 		class="cloud"
+		bind:this={cloudEl}
 		role="presentation"
 		onpointerdown={onPointerDown}
 		onpointermove={onPointerMove}
@@ -196,9 +217,10 @@
 
 	.cloud {
 		position: relative;
-		width: min(100%, 420px);
-		height: 320px;
-		margin-top: 0.25rem;
+		width: min(100%, 720px);
+		height: min(72vw, 640px);
+		margin-top: 0.5rem;
+		margin-inline: auto;
 		touch-action: none;
 		user-select: none;
 		cursor: grab;
@@ -211,8 +233,9 @@
 	.meridian {
 		position: absolute;
 		inset: 50% auto auto 50%;
-		width: 240px;
-		height: 240px;
+		width: min(90%, 600px);
+		height: min(90%, 600px);
+		aspect-ratio: 1;
 		transform: translate(-50%, -50%);
 		pointer-events: none;
 		overflow: visible;
@@ -267,7 +290,7 @@
 		);
 		opacity: 1;
 		font-family: var(--font-mono);
-		font-size: 0.65rem;
+		font-size: clamp(0.7rem, 1.1vw, 0.85rem);
 		white-space: nowrap;
 		will-change: transform, color;
 	}

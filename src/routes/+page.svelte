@@ -2,6 +2,7 @@
 	import { reveal } from '$lib/actions/reveal';
 	import Kpi from '$lib/components/Kpi.svelte';
 	import PlotFrame from '$lib/components/PlotFrame.svelte';
+	import RepoPager from '$lib/components/RepoPager.svelte';
 	import RepoTable from '$lib/components/RepoTable.svelte';
 	import SyncButton from '$lib/components/SyncButton.svelte';
 	import { areaClones, toDatePoints } from '$lib/charts/plot';
@@ -89,6 +90,18 @@
 			<RepoTable
 				items={data.repos.items}
 				totalClones={data.repos.total_clones}
+				sort={data.sort}
+				dir={data.dir}
+				q={data.q}
+				page={data.repos.page ?? 1}
+				perPage={data.repos.per_page ?? 25}
+			/>
+			<RepoPager
+				page={data.repos.page ?? 1}
+				perPage={data.repos.per_page ?? 25}
+				totalPages={data.repos.total_pages ??
+					Math.max(1, Math.ceil(data.repos.total_count / (data.repos.per_page ?? 25)))}
+				totalCount={data.repos.total_count}
 				sort={data.sort}
 				dir={data.dir}
 				q={data.q}

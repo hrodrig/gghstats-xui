@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
+	import RepoPager from '$lib/components/RepoPager.svelte';
 	import { fmtCompact, fmtNumber, splitRepo } from '$lib/format';
 
 	let { data } = $props();
@@ -66,6 +67,16 @@
 					</li>
 				{/each}
 			</ul>
+			<RepoPager
+				page={data.featured.page}
+				perPage={data.featured.per_page}
+				totalPages={data.featured.total_pages}
+				totalCount={data.featured.total_count}
+				sort={data.sort}
+				dir={data.dir}
+				q={data.q}
+				basePath="/featured"
+			/>
 		{/if}
 	{/if}
 </section>
